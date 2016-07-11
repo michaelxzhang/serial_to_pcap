@@ -21,6 +21,7 @@ Input format:
 02 01 04 02 01 AA 2A 67 16
 
 Time stampe need start with [, and with Rx or Tx in the line;
+
 Current support 15 data per line, can be configured in the future;
 
 The input file will be formatted to a temperaory file with different name, added '_n' at the input filename.
