@@ -1,0 +1,6 @@
+{
+  "name": "Serial to pcap",
+  "tagline": "Convert serial communication traffic to pcapng that could be read by Wireshark",
+  "body": "### Welcome to Michael's Pages.\r\nThis tool convert serial communication traffic to pcapng that could be read and analyzed by Wireshark.\r\n\r\nWirtten by AutoHotKey scripts.\r\n\r\nCurrently supported protocol: \r\n\r\n1) DNP3.0\r\n\r\n2) IEC 60870-5-101\r\n\r\n3) IEC 60870-5-103\r\n\r\n4) IEC 60870-5-104\r\n\r\n5) Modbus TCP\r\n\r\n### Authors and Contributors\r\nThis script written by Michael Zhang.\r\n\r\n### Support or Contact\r\nHaving questions? Please contact michaelxmail[AT]gmail.com\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
