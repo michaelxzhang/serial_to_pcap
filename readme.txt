@@ -1,6 +1,9 @@
 # serial_to_pcap
 Convert serial communication traffic to pcapng that could be read and analyzed by Wireshark.
 
+For example, sometime you have the protocol traffic, and you want to analyze it. 
+Use this tool, you can convert your protocol traffic into pcapng and load with Wireshark.
+
 Wirtten by AutoHotKey scripts.
 
 Currently supported protocol: 
