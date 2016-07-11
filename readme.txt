@@ -1,6 +1,8 @@
 # serial_to_pcap
 Convert serial communication traffic to pcapng that could be read and analyzed by Wireshark.
+
 Wirtten by AutoHotKey scripts.
+
 Currently supported protocol: 
   1) DNP3.0
   2) IEC 60870-5-101
@@ -8,8 +10,9 @@ Currently supported protocol:
   4) IEC 60870-5-104
   5) Modbus TCP
 
-Note: This tool will call text2pcap that comes with Wireshark installation.
-Default execute path is "C:\Program Files\Wireshark\text2pcap.exe".(Maybe consider put path in a text file) 
+Note: This tool will format the seleted captured serial traffic into the format that could be read by text2pcap, then call text2pcap to covert the file into pcapng.
+
+text2pcap.exe default execute path is "C:\Program Files\Wireshark\text2pcap.exe".(Maybe consider put this path in a text file) 
   
 Input format:
 
