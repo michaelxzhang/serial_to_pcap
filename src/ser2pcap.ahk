@@ -87,12 +87,17 @@ ButtonConvert:
 		else
 		{
 			;MsgBox, %A_LoopReadLine%
-			char1_2 := SubStr(A_LoopReadLine,1,2)
+			char1 = "N"
+			char2 = "N"
+			char3 = "N"
+			char1 := SubStr(A_LoopReadLine,1,1)
+			char2 := SubStr(A_LoopReadLine,2,1)
 			char3 := SubStr(A_LoopReadLine,3,1)
-			;MsgBox, %char1_2%##%char3%##
+			;MsgBox, ##%char1%##%char2%##%char3%##
 			
 			;data line first two are hex, third is space
-			if char1_2 is xdigit
+			;if char1_2 is xdigit
+			if (IsHex(char1)=1 and IsHex(char2) = 1)
 			{
 				if char3 is space
 				{
@@ -116,6 +121,7 @@ ButtonConvert:
 				;MsgBox, others
 				FileAppend, #%A_LoopReadLine%`n
 			}
+			
 		}
 
 	}  ; Loop Read
@@ -124,3 +130,11 @@ ButtonConvert:
 	
 	ExitApp
 	;return
+	
+IsHex(number)
+{
+	if number in 0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,A,B,C,D,E,F
+		return 1
+	else 
+		return 0
+}
