@@ -80,6 +80,9 @@ ButtonConvert:
 			{
 				StringReplace, nStr, A_LoopReadLine, [, O%A_Space%
 			}
+			else
+				StringReplace, nStr, A_LoopReadLine, [
+				
 			FileAppend, %nStr%`n
 			datapacketlinecnt := 0
 		} ;IfInString [
