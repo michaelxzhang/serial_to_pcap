@@ -59,6 +59,40 @@ ButtonConvert:
 	StringRight, protonum, selectedproto, strlen - startpos - 1
 	;Msgbox, %strlen% - %startpos% = %protonum%
 	
+	;check if the file has DataColumnWidth setting in the first line
+	;if found, then read te data column width infromation
+	FileReadLine, linestr, %SourceFile%, 1
+	StringReplace, nStr, linestr, %A_Space%,,All
+	
+    foundpos := InStr(nStr, "DataColumnWidth=")
+	if foundpos = 0
+	{
+		colwid = 15
+	}
+	else
+	{
+		num1 := SubStr(nStr,foundpos+16,1)
+		num2 := SubStr(nStr,foundpos+17,1)
+		
+		if (num1 > 0) and (num1 <=9 )
+		{
+			if (num2 >= 0) and (num2 <= 9)
+			{
+				colwid = %num1%%num2%
+			}
+			else
+			{
+				colwid = %num1%
+			}
+		}
+		else
+		{
+			MsgBox, DataColumnWidth setting invalid, please check!
+			return
+		}
+		
+	}
+		
 	;start the convert job
 	Loop, read, %SourceFile%, %tempF%
 	{
@@ -110,7 +144,7 @@ ButtonConvert:
 					;add offset at the begining of dataline
 					fmtstr := Format("{1:04X}", datapacketlinecnt)
 					FileAppend, %fmtstr% %A_LoopReadLine%`n
-					datapacketlinecnt := datapacketlinecnt + 15
+					datapacketlinecnt := datapacketlinecnt + colwid
 				}
 				else
 				{
