@@ -1,6 +1,7 @@
+;This script will read the your serial communication log file and convert it to pcapng file for Wireshark    
+;Wirtten by: Michael Zhang
+;Contacct: michaelxmail[AT]gmail.com
 
-;This script will read the SSNET communication log file and convert it to pcapng file for Wireshark    
-	
 FileSelectFile, SourceFile, 3,, Pick a Communication log file
 if SourceFile =
     return  ; This will exit in this case.
