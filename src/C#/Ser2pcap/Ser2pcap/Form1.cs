@@ -48,6 +48,40 @@ namespace Ser2pcap
 
         private void button2_Click(object sender, EventArgs e)
         {
+            string tmpsel = Combox_Pro_Sel.Text;
+
+            toolStripStatusLabel1.Text = "Validating selection...";
+
+            if (tmpsel == "")
+            {
+                MessageBox.Show("Please choose the protocol before convert!");
+                return;
+            }
+
+            int portnum = 0;
+
+            bool canConvert = int.TryParse(tmpsel, out portnum);
+            if (canConvert == false)
+            {
+                if (tmpsel.IndexOf('@') >= 0)
+                {
+                    string[] splitstr = tmpsel.Split('@');
+                    bool canConvert2 = int.TryParse(splitstr[1], out portnum);
+                    if (canConvert2 == false)
+                    {
+                        MessageBox.Show("Please select a protocol or enter a valid number!");
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please select a protocol or enter a valid number!");
+                    return;
+                }
+            }
+
+            toolStripStatusLabel1.Text = "Selecting file for convert...";
+
             OpenFileDialog SerialFileDialog = new OpenFileDialog();
             SerialFileDialog.Title = "Select Serial traffic file";
             SerialFileDialog.Filter = "TXT files|*.txt";
@@ -63,6 +97,8 @@ namespace Ser2pcap
                 string[] filelines = File.ReadAllLines(filename);
                 int datacnt_pre= 0;
                 int datacnt = 0;
+
+                toolStripStatusLabel1.Text = "Formating file...";
 
                 for (int cnt = 0; cnt < filelines.Length; cnt++)
                 {
@@ -130,6 +166,8 @@ namespace Ser2pcap
                 }
                 File.WriteAllLines(newfilename, filelines);
 
+                toolStripStatusLabel1.Text = "Converting to pcapng...";
+
                 //call wireshark text2pcap to convert the txt file
                 ProcessStartInfo startInfo = new ProcessStartInfo();
                 startInfo.CreateNoWindow = false;
@@ -137,7 +175,7 @@ namespace Ser2pcap
                 startInfo.FileName = "C:\\Program Files\\Wireshark\\text2pcap.exe";
                 startInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 //add " around new file name, in case file name has space and will cause text2pcap execute wrong
-                startInfo.Arguments = "-D -T 1111,22403 -t %H:%M:%S. "+"\""+newfilename + "\"" + " "+ "\""+pcapname + "\"";
+                startInfo.Arguments = "-D -T 1111,"+portnum.ToString()+" -t %H:%M:%S. "+"\""+newfilename + "\"" + " "+ "\""+pcapname + "\"";
 
                 try
                 {
@@ -153,6 +191,7 @@ namespace Ser2pcap
                     // Log error.
                 }
             }
+            toolStripStatusLabel1.Text = "Waiting for selection";
         }
     }
 }
