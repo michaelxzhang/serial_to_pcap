@@ -71,6 +71,7 @@
             this.BthAbout.TabIndex = 1;
             this.BthAbout.Text = "About";
             this.BthAbout.UseVisualStyleBackColor = true;
+            this.BthAbout.Visible = false;
             this.BthAbout.Click += new System.EventHandler(this.BthAbout_Click);
             // 
             // BtnConvert

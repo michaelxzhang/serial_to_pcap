@@ -24,14 +24,10 @@ This tool will format the traffic file and call text2pcap to convert the formatt
  
 ************************************/
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 //using System.Linq;
-using System.Text;
 //using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -151,10 +147,13 @@ namespace Ser2pcap
                         string[] splitLines = tmpline.Split(' ');
                         datacnt_pre = datacnt;
 
-                        foreach (string dstr in splitLines)
+                        //foreach (string dstr in splitLines)
+                        for(int i=0;i<splitLines.Length;i++)
                         {
-                            if (dstr.Length == 2)
+                            if (splitLines[i].Length == 2)
                                 datacnt++;
+                            else if (splitLines[i] == "")
+                                break;
                         }
 
                         tmpline = datacnt_pre.ToString("X4") + " " + tmpline;
