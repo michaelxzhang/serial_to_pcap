@@ -150,9 +150,21 @@ namespace Ser2pcap
                         //foreach (string dstr in splitLines)
                         for(int i=0;i<splitLines.Length;i++)
                         {
+                            char tch1 = 'x';
+                            char tch2 = 'x';
+
                             if (splitLines[i].Length == 2)
-                                datacnt++;
+                            {
+                                tch1 = splitLines[i][0];
+                                tch2 = splitLines[i][1];
+                                if ((IsHex(tch1) == true) & (IsHex(tch2) == true))
+                                    datacnt++;
+                                else
+                                    break;
+                            }
                             else if (splitLines[i] == "")
+                                break;
+                            else if (splitLines[i].Length != 2)
                                 break;
                         }
 
