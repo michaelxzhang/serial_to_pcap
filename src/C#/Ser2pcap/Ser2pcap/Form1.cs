@@ -145,6 +145,7 @@ namespace Ser2pcap
                     {
                         //count the data
                         string[] splitLines = tmpline.Split(' ');
+                        string cleanline = "";
                         datacnt_pre = datacnt;
 
                         //foreach (string dstr in splitLines)
@@ -158,7 +159,10 @@ namespace Ser2pcap
                                 tch1 = splitLines[i][0];
                                 tch2 = splitLines[i][1];
                                 if ((IsHex(tch1) == true) & (IsHex(tch2) == true))
+                                {
+                                    cleanline = cleanline + splitLines[i] + " ";
                                     datacnt++;
+                                }
                                 else
                                     break;
                             }
@@ -168,7 +172,7 @@ namespace Ser2pcap
                                 break;
                         }
 
-                        tmpline = datacnt_pre.ToString("X4") + " " + tmpline;
+                        tmpline = datacnt_pre.ToString("X4") + " " + cleanline;
                         //then add offset at begining
                     }
                     else
@@ -194,7 +198,7 @@ namespace Ser2pcap
             startInfo.FileName = "C:\\Program Files\\Wireshark\\text2pcap.exe";
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             //add " around new file name, in case file name has space and will cause text2pcap execute wrong
-            startInfo.Arguments = "-D -T 1111," + portnum.ToString() + " -t %H:%M:%S. " + "\"" + newfilename + "\"" + " " + "\"" + pcapname + "\"";
+            startInfo.Arguments = " -D -T 1111," + portnum.ToString() + " -t %H:%M:%S. " + "\"" + newfilename + "\"" + " " + "\"" + pcapname + "\"";
 
             try
             {
