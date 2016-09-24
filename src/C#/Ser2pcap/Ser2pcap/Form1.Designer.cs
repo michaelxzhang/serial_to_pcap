@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.Combox_Pro_Sel = new System.Windows.Forms.ComboBox();
-            this.BthAbout = new System.Windows.Forms.Button();
             this.BtnConvert = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -51,28 +50,16 @@
             this.Combox_Pro_Sel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Combox_Pro_Sel.FormattingEnabled = true;
             this.Combox_Pro_Sel.Items.AddRange(new object[] {
-            "DNP 3.0 @20000",
-            "IEC 104 @2404",
-            "IEC 61850  @102",
+            "DNP3.0 @20000",
+            "IEC104 @2404",
+            "IEC61850  @102",
             "Modbus TCP @502",
-            "IEC 101 @22401",
-            "IEC 103 @22403"});
+            "IEC101 @22401",
+            "IEC103 @22403"});
             this.Combox_Pro_Sel.Location = new System.Drawing.Point(37, 184);
             this.Combox_Pro_Sel.Name = "Combox_Pro_Sel";
             this.Combox_Pro_Sel.Size = new System.Drawing.Size(244, 23);
             this.Combox_Pro_Sel.TabIndex = 4;
-            // 
-            // BthAbout
-            // 
-            this.BthAbout.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BthAbout.Location = new System.Drawing.Point(104, 240);
-            this.BthAbout.Name = "BthAbout";
-            this.BthAbout.Size = new System.Drawing.Size(109, 32);
-            this.BthAbout.TabIndex = 1;
-            this.BthAbout.Text = "About";
-            this.BthAbout.UseVisualStyleBackColor = true;
-            this.BthAbout.Visible = false;
-            this.BthAbout.Click += new System.EventHandler(this.BthAbout_Click);
             // 
             // BtnConvert
             // 
@@ -218,7 +205,6 @@
             this.Controls.Add(this.Label_select_protocol);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.BtnConvert);
-            this.Controls.Add(this.BthAbout);
             this.Controls.Add(this.Combox_Pro_Sel);
             this.Name = "FormSer2pcap";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -234,7 +220,6 @@
         #endregion
 
         private System.Windows.Forms.ComboBox Combox_Pro_Sel;
-        private System.Windows.Forms.Button BthAbout;
         private System.Windows.Forms.Button BtnConvert;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;

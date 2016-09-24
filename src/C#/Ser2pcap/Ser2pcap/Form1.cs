@@ -101,6 +101,9 @@ namespace Ser2pcap
             string[] filelines = File.ReadAllLines(filename);
             int datacnt_pre = 0;
             int datacnt = 0;
+            string line1_1st_data = "xx";
+            string line1_2nd_data = "xx";
+            int reassemble = 0;   //=1, need to reassemble
 
             toolStripStatusLabel1.Text = "Formating file...";
 
@@ -124,6 +127,10 @@ namespace Ser2pcap
                         tmpline = datacnt.ToString("X4") + " " + tmpline;
                     }
                     datacnt = datacnt + 1;
+                    if (datacnt == 1)
+                    {
+                        line1_1st_data = tmpline;
+                    }
                 }
                 else if (tmpline.Length > 2)
                 {
@@ -134,11 +141,20 @@ namespace Ser2pcap
                     //timestamp line 12:34:56.789   
                     if ((IsHex(char1) == true) & (IsHex(char2) == true) & (char3 == ':'))
                     {
-                        datacnt = 0;
-                        if (tmpline.IndexOf("Rx") >= 0)      //has Rx in this line?
-                            tmpline = "I " + tmpline;
-                        else if (tmpline.IndexOf("Tx") >= 0)  //has Tx in this line?
-                            tmpline = "O " + tmpline;
+                        //don't need to reassemble the packet, reset the count
+                        if (reassemble == 0)
+                        {
+                            datacnt = 0;
+
+                            if (tmpline.IndexOf("Rx") >= 0)      //has Rx in this line?
+                                tmpline = "I " + tmpline;
+                            else if (tmpline.IndexOf("Tx") >= 0)  //has Tx in this line?
+                                tmpline = "O " + tmpline;
+                        }
+                        //need to reassemble the data packet, don't need this time stample line
+                        //continue to count
+                        else if (reassemble == 1)
+                            tmpline = "#" + tmpline;
                     }
                     //data line
                     else if ((IsHex(char1) == true) & (IsHex(char2) == true) & (char3 == ' '))
@@ -162,6 +178,16 @@ namespace Ser2pcap
                                 {
                                     cleanline = cleanline + splitLines[i] + " ";
                                     datacnt++;
+
+                                    //save the first two data, used to check if packet reassemble is needed
+                                    if(datacnt == 1)
+                                    {
+                                        line1_1st_data = splitLines[i];
+                                    }
+                                    else if (datacnt == 2)
+                                    {
+                                        line1_2nd_data = splitLines[i];
+                                    }
                                 }
                                 else
                                     break;
@@ -186,6 +212,23 @@ namespace Ser2pcap
                     tmpline = '#' + tmpline;
                 }
                 filelines[cnt] = tmpline;
+
+                //if IEC101 or IEC103 slected, check if need reassemble the data packet
+                if ((tmpsel.IndexOf("IEC101") >= 0) || (tmpsel.IndexOf("IEC103") >= 0))
+                {
+                    if ((line1_1st_data == "10") && (datacnt == 5))
+                        reassemble = 0;
+                    else if ((line1_1st_data == "E5") && (datacnt == 1))
+                        reassemble = 0;
+                    else if (line1_1st_data == "68")
+                    {
+                        int packetlen = Convert.ToInt32(line1_2nd_data, 16);
+                        if (datacnt < (packetlen + 6))
+                            reassemble = 1;
+                        else
+                            reassemble = 0;
+                    }
+                }
             }
             File.WriteAllLines(newfilename, filelines);
 
