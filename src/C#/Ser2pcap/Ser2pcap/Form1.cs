@@ -23,6 +23,7 @@ If line has spaces at begining of the line, this tool will trim them.
 This tool will format the traffic file and call text2pcap to convert the formatted file into pcapng file.
  
 ************************************/
+using Ser2pcap.Properties;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -256,6 +257,13 @@ namespace Ser2pcap
             {
                 // Log error.
             }
+
+            if(checkBox1.Checked == true )
+            {
+                File.Delete(newfilename);
+            }
+
+            
             //}   //this one
             toolStripStatusLabel1.Text = "Waiting for selection";
         }
@@ -271,7 +279,10 @@ namespace Ser2pcap
             OpenFileDialog SerialFileDialog = new OpenFileDialog();
             SerialFileDialog.Title = "Select Serial traffic file";
             SerialFileDialog.Filter = "TXT files|*.txt";
-            SerialFileDialog.InitialDirectory = @"C:\";
+            SerialFileDialog.RestoreDirectory = false;
+            //SerialFileDialog.InitialDirectory = @"C:\";
+            //SerialFileDialog.InitialDirectory = Settings.Default.SettingsLoaded;
+
             if (SerialFileDialog.ShowDialog() == DialogResult.OK)
             {
                 toolStripStatusLabel1.Text = SerialFileDialog.FileName;
@@ -293,6 +304,8 @@ namespace Ser2pcap
                 Label_arrow_select_protocol.Font = new Font(Label_arrow_select_protocol.Font, FontStyle.Bold);
 
                 Combox_Pro_Sel.Focus();
+
+                //Settings.Default.Save();
 
             }
         }

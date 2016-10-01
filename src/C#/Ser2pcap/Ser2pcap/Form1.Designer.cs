@@ -42,6 +42,7 @@
             this.Label_arrow_text2pcap = new System.Windows.Forms.Label();
             this.Label_arror_select_file = new System.Windows.Forms.Label();
             this.Label_arrow_select_protocol = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,7 +65,7 @@
             // BtnConvert
             // 
             this.BtnConvert.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnConvert.Location = new System.Drawing.Point(239, 240);
+            this.BtnConvert.Location = new System.Drawing.Point(239, 248);
             this.BtnConvert.Name = "BtnConvert";
             this.BtnConvert.Size = new System.Drawing.Size(109, 32);
             this.BtnConvert.TabIndex = 5;
@@ -188,11 +189,24 @@
             this.Label_arrow_select_protocol.Text = "->";
             this.Label_arrow_select_protocol.Visible = false;
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(36, 222);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(122, 17);
+            this.checkBox1.TabIndex = 14;
+            this.checkBox1.Text = "Delete temporary file";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // FormSer2pcap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(371, 315);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.Label_arrow_select_protocol);
             this.Controls.Add(this.Label_arror_select_file);
             this.Controls.Add(this.Label_arrow_text2pcap);
@@ -233,6 +247,7 @@
         private System.Windows.Forms.Label Label_arrow_text2pcap;
         private System.Windows.Forms.Label Label_arror_select_file;
         private System.Windows.Forms.Label Label_arrow_select_protocol;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 
