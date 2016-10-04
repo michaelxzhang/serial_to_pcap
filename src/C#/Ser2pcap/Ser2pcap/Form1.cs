@@ -242,7 +242,7 @@ namespace Ser2pcap
             startInfo.FileName = "C:\\Program Files\\Wireshark\\text2pcap.exe";
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             //add " around new file name, in case file name has space and will cause text2pcap execute wrong
-            startInfo.Arguments = " -D -T 1111," + portnum.ToString() + " -t %H:%M:%S. " + "\"" + newfilename + "\"" + " " + "\"" + pcapname + "\"";
+            startInfo.Arguments = " -D -4 10.2.2.2,10.1.1.1 -T 1111," + portnum.ToString() + " -t %H:%M:%S. " + "\"" + newfilename + "\"" + " " + "\"" + pcapname + "\"";
 
             try
             {
