@@ -52,11 +52,13 @@
             this.Combox_Pro_Sel.FormattingEnabled = true;
             this.Combox_Pro_Sel.Items.AddRange(new object[] {
             "DNP3.0 @20000",
+            "IEC101 @22401",
+            "IEC103 @22403",
             "IEC104 @2404",
             "IEC61850  @102",
             "Modbus TCP @502",
-            "IEC101 @22401",
-            "IEC103 @22403"});
+            "SEL Cmd@22423",
+            "SEL FM@23"});
             this.Combox_Pro_Sel.Location = new System.Drawing.Point(37, 184);
             this.Combox_Pro_Sel.Name = "Combox_Pro_Sel";
             this.Combox_Pro_Sel.Size = new System.Drawing.Size(244, 23);
