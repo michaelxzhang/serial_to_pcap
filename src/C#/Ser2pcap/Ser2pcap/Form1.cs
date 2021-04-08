@@ -103,6 +103,10 @@ namespace Ser2pcap
             int datacnt_pre = 0;
             int datacnt = 0;
 
+            // 0 : v2 datetime format 12:34:56.789
+            // 1 : v3 datetime format 2021-Apr-23 12:34:56.789
+            int logtype = 0;   
+
             toolStripStatusLabel1.Text = "Formating file...";
 
             for (int cnt = 0; cnt < filelines.Length; cnt++)
@@ -140,6 +144,27 @@ namespace Ser2pcap
                             tmpline = "I " + tmpline;
                         else if (tmpline.IndexOf("Tx") >= 0)  //has Tx in this line?
                             tmpline = "O " + tmpline;
+
+                        logtype = 0;
+
+                    }
+                    else if(Char.IsDigit(char1)==true & Char.IsDigit(char2)==true & Char.IsDigit(char3)==true)
+                    {
+                        if (tmpline.Length > 33)
+                        {
+                            char char4 = tmpline[3];
+                            char char5 = tmpline[4];
+                            if (Char.IsDigit(char4)==true & char5 == '-')
+                            {
+                                datacnt = 0;
+                                if (tmpline.IndexOf("Rx") >= 0)      //has Rx in this line?
+                                    tmpline = "I " + tmpline;
+                                else if (tmpline.IndexOf("Tx") >= 0)  //has Tx in this line?
+                                    tmpline = "O " + tmpline;
+
+                                logtype = 1;
+                            }
+                        }
                     }
                     //data line
                     else if ((IsHex(char1) == true) & (IsHex(char2) == true) & (char3 == ' '))
@@ -192,14 +217,18 @@ namespace Ser2pcap
 
             toolStripStatusLabel1.Text = "Converting to pcapng...";
 
+            string datetimefmt = "%H:%M:%S. ";
+            if (logtype == 1)
+                datetimefmt = "%Y-%b-%d %H:%M:%S. ";
+
             //call wireshark text2pcap to convert the txt file
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.CreateNoWindow = false;
             startInfo.UseShellExecute = false;
-            startInfo.FileName = "C:\\Program Files\\Wireshark\\text2pcap.exe";
+            startInfo.FileName = TextBox_Text2pcap.Text;
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             //add " around new file name, in case file name has space and will cause text2pcap execute wrong
-            startInfo.Arguments = " -D -4 10.2.2.2,10.1.1.1 -T 1111," + portnum.ToString() + " -t %H:%M:%S. " + "\"" + newfilename + "\"" + " " + "\"" + pcapname + "\"";
+            startInfo.Arguments = " -D -4 10.2.2.2,10.1.1.1 -T 1111," + portnum.ToString() + " -t " + "\"" + datetimefmt + "\" " + "\"" + newfilename + "\"" + " " + "\"" + pcapname + "\"";
 
             try
             {
@@ -210,7 +239,7 @@ namespace Ser2pcap
                     exeProcess.WaitForExit();
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 // Log error.
             }
@@ -310,7 +339,7 @@ namespace Ser2pcap
                 {
                     Label_text2pcap.Font = new Font(Label_text2pcap.Font, FontStyle.Regular);
                     Label_text2pcap.Text = "Text2pcap found!";
-                    TextBox_Text2pcap.Text = "C:\\Program Files\\Wireshark\\text2pcap.exe";
+                    TextBox_Text2pcap.Text = Select_text2pcap_Dialog.FileName;
                     Label_arrow_text2pcap.Visible = false;
 
                     Label_select_file.Font = new Font(Label_select_file.Font, FontStyle.Bold);
