@@ -217,9 +217,18 @@ namespace Ser2pcap
 
             toolStripStatusLabel1.Text = "Converting to pcapng...";
 
-            string datetimefmt = "%H:%M:%S. ";
+            string datetimefmt = "%H:%M:%S.";
             if (logtype == 1)
-                datetimefmt = "%Y-%b-%d %H:%M:%S. ";
+                datetimefmt = "%Y-%b-%d %H:%M:%S.";
+
+            //start from 4.0.4, text2pcap using %f for fractional seconds, otherwise it will display 0s
+            var versionInfo = FileVersionInfo.GetVersionInfo(TextBox_Text2pcap.Text);
+            string current_version = versionInfo.FileVersion;
+            string newfmt_version = "4.0.0";
+
+            var result = current_version.CompareTo(newfmt_version);
+            if (result >= 0)
+                datetimefmt = datetimefmt + "%f ";
 
             //call wireshark text2pcap to convert the txt file
             ProcessStartInfo startInfo = new ProcessStartInfo();
